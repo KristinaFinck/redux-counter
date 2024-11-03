@@ -5,3 +5,6 @@
  export const onClickSetAC = () => (
      {type: 'CLICK_SET'}
  )
+export const addCountAC = () => (
+    {type: 'ADD_COUNT'}
+)

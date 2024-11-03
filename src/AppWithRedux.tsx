@@ -12,15 +12,18 @@ import {
 } from './styles/Styles';
 import {theme} from "./styles/theme";
 
-import {onClickSetAC, resetCountAC} from './store/actionsCreators';
+import {addCountAC, onClickSetAC, resetCountAC} from './store/actionsCreators';
 
 export const AppWithRedux = () => {
     let dispatch = useDispatch();
 
   const onClickReset = () => {
-        dispatch(resetCountAC())
+        dispatch(resetCountAC());
     }
     const onClickSet = () => {
-      dispatch(onClickSetAC())
+      dispatch(onClickSetAC());
+    }
+    const onClickAddCount = () => {
+      dispatch(addCountAC());
     }
 }

@@ -28,6 +28,14 @@ export const counterReducer = (state = initialState, action: ActionType): Counte
                 isResetButtonDisabled: false,
                 isSetButtonDisabled: state.errorMessage ? true : false
             };
+        case 'ADD_COUNT':
+            return {
+                ...state,
+                isIncButtonDisabled: (state.errorMessage || state.currentValue + 1 >= state.maxValue) ? true: false,
+                currentValue:  state.currentValue < state.maxValue
+                    ? state.currentValue +1
+                    : state.currentValue
+            }
         default: return state
     }
 }

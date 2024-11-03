@@ -8,10 +8,10 @@
 import {counterReducer, CounterStateType} from "./counterReducer";
 let initialState: CounterStateType;
 beforeEach(() => {
-    const initialState = {
+    initialState = {
         startValue: 0,        // начальное значение счетчика
         currentValue: 0,      // текущее значение счетчика
-        maxValue: 0,          // максимальное значение счетчика
+        maxValue: 10,          // максимальное значение счетчика
         isSetButtonDisabled: true,   // состояние кнопки "set"
         errorMessage: '',            // сообщение об ошибке
         settingMessage: '',          // сообщение для настройки значений
@@ -35,4 +35,9 @@ test('CLICK_SET should set currentValue to startValue', () => {
     expect(newState.isIncButtonDisabled).toBe(false);
     expect(newState.isSetButtonDisabled).toBe(false)
 
-} )
+});
+
+test('ADD_COUNT should increase currentValue by 1', () => {
+    const newState = counterReducer(initialState, {type: 'ADD_COUNT'});
+    expect(newState.currentValue).toBe(1);
+})
