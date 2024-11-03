@@ -10,7 +10,7 @@ const initialState = {
     isIncButtonDisabled: false,  // состояние кнопки "inc"
     isResetButtonDisabled: false // состояние кнопки "reset"
 };
-export const counterReducer = (state = initialState, action) => {
+export const counterReducer = (state = initialState, action: ActionType): CounterStateType => {
     switch (action.type) {
         case 'RESET_COUNT':
             return {
@@ -19,6 +19,30 @@ export const counterReducer = (state = initialState, action) => {
                 isIncButtonDisabled: false,  // Кнопка inc активна
                 isResetButtonDisabled: state.errorMessage ? true : false // Кнопка reset неактивна, если есть сообщение об ошибк
             }
-
+        case 'CLICK_SET':
+            return {
+                ...state,
+                settingMessage: '',
+                currentValue: state.startValue,
+                isIncButtonDisabled: false,
+                isResetButtonDisabled: false,
+                isSetButtonDisabled: state.errorMessage ? true : false
+            };
+        default: return state
     }
+}
+
+export type CounterStateType = {
+    startValue: number
+    currentValue: number
+    maxValue: number
+    isSetButtonDisabled: boolean
+    errorMessage: string
+    settingMessage: string
+    isIncButtonDisabled: boolean
+    isResetButtonDisabled: boolean
+}
+export type ActionType = {
+    type: string
+    payload?: any
 }

@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux";
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect,} from 'react';
 import {Button} from "./button/Button";
 import {Input} from "./input/Input";
 
@@ -12,13 +12,15 @@ import {
 } from './styles/Styles';
 import {theme} from "./styles/theme";
 
-import { resetCountAC } from './store/actionsCreators';
-import {useState} from "react"; // путь к actions.js
+import {onClickSetAC, resetCountAC} from './store/actionsCreators';
 
 export const AppWithRedux = () => {
     let dispatch = useDispatch();
 
- export const onClickReset = () => {
-        dispatch(resetCountAC)
+  const onClickReset = () => {
+        dispatch(resetCountAC())
+    }
+    const onClickSet = () => {
+      dispatch(onClickSetAC())
     }
 }
