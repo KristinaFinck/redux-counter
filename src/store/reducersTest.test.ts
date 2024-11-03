@@ -38,6 +38,19 @@ test('CLICK_SET should set currentValue to startValue', () => {
 });
 
 test('ADD_COUNT should increase currentValue by 1', () => {
-    const newState = counterReducer(initialState, {type: 'ADD_COUNT'});
-    expect(newState.currentValue).toBe(1);
+    initialState = {
+        ...initialState,
+        currentValue: 9,    // меньше maxValue для начала
+        maxValue: 10,       // задаем maxValue для проверки
+        isIncButtonDisabled: false, // кнопка активна в начале
+    };
+    let newState = counterReducer(initialState, {type: 'ADD_COUNT'});
+    expect(newState.currentValue).toBe(10);
+    expect(newState.isIncButtonDisabled).toBe(true);// кнопка должна стать неактивной
+
+// Тестируем случай, когда currentValue меньше maxValue
+    initialState = { ...initialState, currentValue: 8, maxValue: 10 };
+    newState = counterReducer(initialState, { type: 'ADD_COUNT' });
+    expect(newState.currentValue).toBe(9); // currentValue увеличивается на 1
+    expect(newState.isIncButtonDisabled).toBe(false); // кнопка остается активной
 })
