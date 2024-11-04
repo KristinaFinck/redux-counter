@@ -6,6 +6,7 @@
 //     expect(newState.isResetButtonDisabled).toBe(false);
 // })
 import {counterReducer, CounterStateType} from "./counterReducer";
+import {error} from "../App";
 let initialState: CounterStateType;
 beforeEach(() => {
     initialState = {
@@ -15,8 +16,8 @@ beforeEach(() => {
         isSetButtonDisabled: true,   // состояние кнопки "set"
         errorMessage: '',            // сообщение об ошибке
         settingMessage: '',          // сообщение для настройки значений
-        isIncButtonDisabled: false,  // состояние кнопки "inc"
-        isResetButtonDisabled: false // состояние кнопки "reset"
+        isIncButtonDisabled: true,  // состояние кнопки "inc"
+        isResetButtonDisabled: true // состояние кнопки "reset"
     };
 })
 test('RESET_COUNT should reset currentValue to startValue', () => {
@@ -55,26 +56,26 @@ test('ADD_COUNT should increase currentValue by 1', () => {
     expect(newState.isIncButtonDisabled).toBe(false); // кнопка остается активной
 })
 
-test('SET_MAX_VALUE hould set max value if it is positive and greater than start value', () => {
+test('SET_MAX_VALUE should set max value if it is positive and greater than start value', () => {
     initialState = { ...initialState, startValue: 0, maxValue: 5 };
     let newState = counterReducer(initialState, {type: 'SET_MAX_VALUE', payload: 5});
     expect(newState.settingMessage).toBe("enter values and press 'set'");
     expect(newState.isSetButtonDisabled).toBe(false);
     expect(newState.errorMessage).toBe('');
-    expect(newState.isIncButtonDisabled).toBe(false);
+    expect(newState.isIncButtonDisabled).toBe(true);
     expect(newState.isResetButtonDisabled).toBe(true);
     // тестируем случай, когда maxValue < 0 ;
     initialState = { ...initialState, startValue: 0, maxValue: -1 };
      newState = counterReducer(initialState, {type: 'SET_MAX_VALUE', payload: -1});
-    expect(newState.settingMessage).toBe('');
+    expect(newState.settingMessage).toBe("");
     expect(newState.isSetButtonDisabled).toBe(true);
-    expect(newState.errorMessage).toBe("enter values and press 'set'");
+    expect(newState.errorMessage).toBe(error);
     expect(newState.isIncButtonDisabled).toBe(true);
     expect(newState.isResetButtonDisabled).toBe(true);
 // Случай, когда maxValue равно startValue
     initialState = { ...initialState, startValue: 5 };
     newState = counterReducer(initialState, { type: 'SET_MAX_VALUE', payload: 5 });
-    expect(newState.settingMessage).toBe("enter values and press 'set'");
-    expect(newState.isSetButtonDisabled).toBe(false);
+    expect(newState.settingMessage).toBe("");
+    expect(newState.isSetButtonDisabled).toBe(true);
     expect(newState.errorMessage).toBe('');
 })

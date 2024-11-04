@@ -11,6 +11,7 @@ import {
 } from './styles/Styles';
 import {theme} from "./styles/theme";
 
+export const error = "incorrect value!"
 function App() {
   let [startValue, setStartValue] = useState<number>(() =>{
     const savedStartValue = localStorage.getItem('startValue');
@@ -33,7 +34,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem('maxValue', JSON.stringify(maxValue));
   }, [maxValue])
-  let error = "incorrect value!"
+
   let onChangeMaxInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const inputMaxValue = Number(e.currentTarget.value);
     setSettingMessage("enter values and press 'set'");

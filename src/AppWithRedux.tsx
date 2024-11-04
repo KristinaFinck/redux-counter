@@ -12,18 +12,22 @@ import {
 } from './styles/Styles';
 import {theme} from "./styles/theme";
 
-import {addCountAC, onClickSetAC, resetCountAC} from './store/actionsCreators';
+import {addCountAC, maxValueAC, onClickSetAC, resetCountAC} from './store/actionsCreators';
 
 export const AppWithRedux = () => {
     let dispatch = useDispatch();
-
-  const onClickReset = () => {
+    let error = "incorrect value!"
+    const onClickReset = () => {
         dispatch(resetCountAC());
     }
     const onClickSet = () => {
-      dispatch(onClickSetAC());
+        dispatch(onClickSetAC());
     }
     const onClickAddCount = () => {
-      dispatch(addCountAC());
+        dispatch(addCountAC());
+    }
+    const onChangeMaxInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputMaxValue = Number(e.currentTarget.value);
+        dispatch(maxValueAC(inputMaxValue));
     }
 }

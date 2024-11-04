@@ -1,4 +1,5 @@
 import {ChangeEvent} from "react";
+import {error} from "../App";
 
 const initialState = {
     startValue: 0,        // начальное значение счетчика
@@ -7,8 +8,8 @@ const initialState = {
     isSetButtonDisabled: true,   // состояние кнопки "set"
     errorMessage: '',            // сообщение об ошибке
     settingMessage: '',          // сообщение для настройки значений
-    isIncButtonDisabled: false,  // состояние кнопки "inc"
-    isResetButtonDisabled: false // состояние кнопки "reset"
+    isIncButtonDisabled: true,  // состояние кнопки "inc"
+    isResetButtonDisabled: true // состояние кнопки "reset"
 };
 export const counterReducer = (state = initialState, action: ActionType): CounterStateType => {
     switch (action.type) {
@@ -31,13 +32,23 @@ export const counterReducer = (state = initialState, action: ActionType): Counte
         case 'ADD_COUNT':
             return {
                 ...state,
-                isIncButtonDisabled: (state.errorMessage || state.currentValue + 1 >= state.maxValue) ? true: false,
-                currentValue:  state.currentValue < state.maxValue
-                    ? state.currentValue +1
+                isIncButtonDisabled: (state.errorMessage || state.currentValue + 1 >= state.maxValue) ? true : false,
+                currentValue: state.currentValue < state.maxValue
+                    ? state.currentValue + 1
                     : state.currentValue
             }
-        default: return state
+        case 'SET_MAX_VALUE':
+            return {
+                ...state,
+                maxValue: action.payload, // Устанавливаем maxValue из payload
+                settingMessage: action.payload >= 0 && action.payload > state.startValue ? "enter values and press 'set'" : '',
+                isSetButtonDisabled: action.payload > state.startValue && state.startValue >= 0 ? false : true,
+                errorMessage: action.payload > 0 || state.startValue < action.payload ? '' : error,
+            }
+        default:
+            return state
     }
+
 }
 
 export type CounterStateType = {
