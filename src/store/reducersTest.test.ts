@@ -76,16 +76,17 @@ test('SET_MAX_VALUE should set max value if it is positive and greater than star
 
 // Случай, когда maxValue = startValue (ошибка)
     let testState = { ...initialState, startValue: 1, maxValue: 2 };
-    newState = counterReducer(initialState, { type: 'SET_MAX_VALUE', payload: 1 });
+    newState = counterReducer(testState, { type: 'SET_MAX_VALUE', payload: 1 });
     expect(newState.settingMessage).toBe("");
     expect(newState.isSetButtonDisabled).toBe(true);
     expect(newState.errorMessage).toBe(error);
-    // Cлучай, когда maxValue < startValue
-    initialState = { ...initialState, startValue: 3, maxValue: 3 };
-    newState = counterReducer(initialState, { type: 'SET_MAX_VALUE', payload: 2 });
+
+    // Cлучай, когда maxValue < startValue (ошибка)
+    testState = { ...initialState, startValue: 3, maxValue: 3 };
+    newState = counterReducer(testState, { type: 'SET_MAX_VALUE', payload: 2 });
     expect(newState.settingMessage).toBe("");
     expect(newState.isSetButtonDisabled).toBe(true);
-    expect(newState.errorMessage).toBe('');
+    expect(newState.errorMessage).toBe(error);
 })
 
 test('SET_START_VALUE should set start value if it is positive and smaler than max value', () => {
@@ -95,14 +96,14 @@ test('SET_START_VALUE should set start value if it is positive and smaler than m
     expect(newState.errorMessage).toBe('');
     expect(newState.isIncButtonDisabled).toBe(true);
     expect(newState.isResetButtonDisabled).toBe(true);
-    // тестируем случай, когда maxValue < 0 ;
+    // тестируем случай, когда startValue < 0 (ошибка);
     newState = counterReducer(initialState, {type: 'SET_START_VALUE', payload: -1});
     expect(newState.settingMessage).toBe("");
     expect(newState.isSetButtonDisabled).toBe(true);
     expect(newState.errorMessage).toBe(error);
     expect(newState.isIncButtonDisabled).toBe(true);
     expect(newState.isResetButtonDisabled).toBe(true);
-    // Случай, когда maxValue = startValue
+    // Случай, когда maxValue = startValue (ошибка)
     let testState = { ...initialState, startValue: 3, maxValue: 4 };
     newState = counterReducer(testState, { type: 'SET_START_VALUE', payload: 4 });
     expect(newState.settingMessage).toBe("");
@@ -110,7 +111,7 @@ test('SET_START_VALUE should set start value if it is positive and smaler than m
     expect(newState.errorMessage).toBe(error);
     expect(newState.isIncButtonDisabled).toBe(true);
     expect(newState.isResetButtonDisabled).toBe(true);
-    //Случай, когда startValue > maxValue
+    //Случай, когда startValue > maxValue (ошибка)
     testState = { ...initialState, startValue: 4, maxValue: 5};
     newState = counterReducer(testState, { type: 'SET_START_VALUE', payload: 6 });
     expect(newState.settingMessage).toBe("");

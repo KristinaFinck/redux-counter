@@ -12,7 +12,7 @@ import {
 } from './styles/Styles';
 import {theme} from "./styles/theme";
 
-import {addCountAC, maxValueAC, onClickSetAC, resetCountAC} from './store/actionsCreators';
+import {addCountAC, maxValueAC, onClickSetAC, resetCountAC, startValueAC} from './store/actionsCreators';
 
 export const AppWithRedux = () => {
     let dispatch = useDispatch();
@@ -30,4 +30,7 @@ export const AppWithRedux = () => {
         const inputMaxValue = Number(e.currentTarget.value);
         dispatch(maxValueAC(inputMaxValue));
     }
-}
+    const onChangeStartInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputStartValue = Number(e.currentTarget.value)
+        dispatch(startValueAC(inputStartValue));
+}}

@@ -42,8 +42,16 @@ export const counterReducer = (state = initialState, action: ActionType): Counte
                 ...state,
                 maxValue: action.payload, // Устанавливаем maxValue из payload
                 settingMessage: action.payload >= 0 && action.payload > state.startValue ? "enter values and press 'set'" : '',
-                isSetButtonDisabled: action.payload > state.startValue && state.startValue >= 0 ? false : true,
-                errorMessage: action.payload > 0 || state.startValue < action.payload ? '' : error,
+                isSetButtonDisabled: action.payload > state.startValue && action.payload >= 0 ? false : true,
+                errorMessage: action.payload <= 0 || state.startValue >= action.payload ? error : '',
+            }
+        case 'SET_START_VALUE':
+            return {
+                ...state,
+                startValue: action.payload,
+                settingMessage: action.payload >= 0 && action.payload < state.maxValue ? "enter values and press 'set'" : '',
+                isSetButtonDisabled: action.payload < state.maxValue && action.payload >= 0 ? false : true,
+                errorMessage: action.payload < 0 || action.payload >= state.maxValue? error : '',
             }
         default:
             return state

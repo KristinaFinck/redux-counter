@@ -12,3 +12,7 @@ export const addCountAC = () => (
      {type: 'SET_MAX_VALUE',
      payload: inputMaxValue}
  )
+ export const startValueAC = (inputStartValue: number) => (
+     {type: 'SET_START_VALUE',
+     payload: inputStartValue}
+ )
