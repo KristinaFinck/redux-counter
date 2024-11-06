@@ -1,4 +1,7 @@
-
+export type ActionType = {
+ type: string;
+ payload?: any;
+}
  export const resetCountAC  = () => (
      {type: 'RESET_COUNT'}
  );

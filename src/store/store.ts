@@ -1,11 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import {counterReducer} from "./counterReducer";
 
-// Определяем тип действия
-interface ActionType {
-    type: string;
-    payload?: any;
-}
-const rootReducer = (state = {}, action:ActionType) => state;
+// Комбинирование редьюсеров
+const rootReducer = combineReducers({
+    counter: counterReducer,
+});
 
 const store = createStore(rootReducer);
 

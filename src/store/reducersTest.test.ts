@@ -1,13 +1,7 @@
-// test('RESET_COUNT should reset currentValue to startValue', () => {
-//     const initialState = {startValue: 5, currentValue: 10, isIncButtonDisabled: false, isResetButtonDisabled: false};
-//     const newState = counterReducer(initialState, {type: 'RESET_COUNT'});
-//     expect(newState.currentValue).toBe(5);
-//     expect(newState.isIncButtonDisabled).toBe(false);
-//     expect(newState.isResetButtonDisabled).toBe(false);
-// })
-import {counterReducer, CounterStateType} from "./counterReducer";
-import {error} from "../App";
-let initialState: CounterStateType;
+
+import {counterReducer, RootStateType} from "./counterReducer";
+import {error} from './counterReducer';
+let initialState: RootStateType;
 beforeEach(() => {
     initialState = {
         startValue: 0,        // начальное значение счетчика

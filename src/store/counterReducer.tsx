@@ -1,5 +1,5 @@
-import {ChangeEvent} from "react";
-import {error} from "../App";
+
+import type {ActionType} from "./actionsCreators";
 
 const initialState = {
     startValue: 0,        // начальное значение счетчика
@@ -11,7 +11,8 @@ const initialState = {
     isIncButtonDisabled: true,  // состояние кнопки "inc"
     isResetButtonDisabled: true // состояние кнопки "reset"
 };
-export const counterReducer = (state = initialState, action: ActionType): CounterStateType => {
+export const  error = "incorrect value!"
+export const counterReducer = (state = initialState, action: ActionType): RootStateType => {
     switch (action.type) {
         case 'RESET_COUNT':
             return {
@@ -59,7 +60,7 @@ export const counterReducer = (state = initialState, action: ActionType): Counte
 
 }
 
-export type CounterStateType = {
+export type RootStateType = {
     startValue: number
     currentValue: number
     maxValue: number
@@ -69,7 +70,4 @@ export type CounterStateType = {
     isIncButtonDisabled: boolean
     isResetButtonDisabled: boolean
 }
-export type ActionType = {
-    type: string
-    payload?: any
-}
+
