@@ -12,24 +12,28 @@ import {
 import {theme} from "./styles/theme";
 
 import {addCountAC, maxValueAC, onClickSetAC, resetCountAC, startValueAC} from './store/actionsCreators';
-import {RootStateType} from "./store/counterReducer";
+import {RootStateType} from "./store/store";
 
 export const AppWithRedux = () => {
     let dispatch = useDispatch();
     // Получение значений состояния из Redux
-    const maxValue = useSelector((state: RootStateType) => state.maxValue);
-    const startValue = useSelector((state: RootStateType) => state.startValue);
-    const errorMessage = useSelector((state: RootStateType) => state.errorMessage);
-    const isSetButtonDisabled = useSelector((state: RootStateType) => state.isSetButtonDisabled);
-    const isIncButtonDisabled = useSelector((state: RootStateType) => state.isIncButtonDisabled);
-    const isResetButtonDisabled = useSelector((state: RootStateType) => state.isResetButtonDisabled);
-    const settingMessage = useSelector((state: RootStateType) => state.settingMessage);
-    const currentValue = useSelector((state: RootStateType) => state.currentValue);
+    const maxValue = useSelector((state: RootStateType) => state.counter.maxValue);
+    const startValue = useSelector((state: RootStateType) => state.counter.startValue);
+    const errorMessage = useSelector((state: RootStateType) => state.counter.errorMessage);
+    const isSetButtonDisabled = useSelector((state: RootStateType) => state.counter.isSetButtonDisabled);
+    const isIncButtonDisabled = useSelector((state: RootStateType) => state.counter.isIncButtonDisabled);
+    const isResetButtonDisabled = useSelector((state: RootStateType) => state.counter.isResetButtonDisabled);
+    const settingMessage = useSelector((state: RootStateType) => state.counter.settingMessage);
+    const currentValue = useSelector((state: RootStateType) => state.counter.currentValue);
 
     const onClickReset = () => {
         dispatch(resetCountAC());
     }
     const onClickSet = () => {
+        localStorage.setItem('startValue', JSON.stringify(startValue));
+        localStorage.setItem('maxValue', JSON.stringify(maxValue));
+
+
         dispatch(onClickSetAC());
     }
     const onClickAddCount = () => {

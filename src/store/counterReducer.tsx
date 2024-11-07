@@ -1,18 +1,27 @@
 
 import type {ActionType} from "./actionsCreators";
+import {RootStateType} from "./store";
+
+let savedStartValue = localStorage.getItem('startValue');
+savedStartValue  =  savedStartValue !==null? JSON.parse(savedStartValue) : 0;
+
+let savedMaxValue = localStorage.getItem('maxValue');
+savedMaxValue = savedMaxValue !== null? JSON.parse(savedMaxValue) : 0;
+
 
 const initialState = {
-    startValue: 0,        // начальное значение счетчика
-    currentValue: 0,      // текущее значение счетчика
-    maxValue: 0,          // максимальное значение счетчика
-    isSetButtonDisabled: true,   // состояние кнопки "set"
+    startValue: savedStartValue ? +savedStartValue : 0,        // начальное значение счетчика
+    currentValue: savedStartValue ? +savedStartValue : 0,      // текущее значение счетчика
+    maxValue: savedMaxValue ? +savedMaxValue : 0,          // максимальное значение счетчика
+    isSetButtonDisabled: false,   // состояние кнопки "set"
     errorMessage: '',            // сообщение об ошибке
     settingMessage: '',          // сообщение для настройки значений
     isIncButtonDisabled: true,  // состояние кнопки "inc"
     isResetButtonDisabled: true // состояние кнопки "reset"
 };
 export const  error = "incorrect value!"
-export const counterReducer = (state = initialState, action: ActionType): RootStateType => {
+export const message = "enter values and press 'set'"
+export const counterReducer = (state = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case 'RESET_COUNT':
             return {
@@ -28,7 +37,7 @@ export const counterReducer = (state = initialState, action: ActionType): RootSt
                 currentValue: state.startValue,
                 isIncButtonDisabled: false,
                 isResetButtonDisabled: false,
-                isSetButtonDisabled: state.errorMessage ? true : false
+                isSetButtonDisabled: true
             };
         case 'ADD_COUNT':
             return {
@@ -42,25 +51,24 @@ export const counterReducer = (state = initialState, action: ActionType): RootSt
             return {
                 ...state,
                 maxValue: action.payload, // Устанавливаем maxValue из payload
-                settingMessage: action.payload >= 0 && action.payload > state.startValue ? "enter values and press 'set'" : '',
+                settingMessage: action.payload >= 0 && action.payload >= state.startValue ? message : '',
                 isSetButtonDisabled: action.payload > state.startValue && action.payload >= 0 ? false : true,
-                errorMessage: action.payload <= 0 || state.startValue >= action.payload ? error : '',
+                errorMessage: action.payload <= 0 || state.startValue > action.payload ? error : '',
             }
         case 'SET_START_VALUE':
             return {
                 ...state,
                 startValue: action.payload,
-                settingMessage: action.payload >= 0 && action.payload < state.maxValue ? "enter values and press 'set'" : '',
+                settingMessage: action.payload >= 0 && action.payload <= state.maxValue ? message : '',
                 isSetButtonDisabled: action.payload < state.maxValue && action.payload >= 0 ? false : true,
-                errorMessage: action.payload < 0 || action.payload >= state.maxValue? error : '',
+                errorMessage: action.payload < 0 || action.payload > state.maxValue? error : '',
             }
         default:
             return state
     }
 
 }
-
-export type RootStateType = {
+export type InitialStateType = {
     startValue: number
     currentValue: number
     maxValue: number
@@ -70,4 +78,3 @@ export type RootStateType = {
     isIncButtonDisabled: boolean
     isResetButtonDisabled: boolean
 }
-
